@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ServiceManager {
-    List<ServiceOrder> orders = new ArrayList<>();
+    List<ServiceOrder> orders = new ArrayList<ServiceOrder>();
 
     void registerOrder(ServiceOrder order){
         for (ServiceOrder currentOrder : orders){
@@ -18,7 +18,13 @@ public class ServiceManager {
     }
 
     ServiceOrder searchById(int id){
-
+        Collections.sort(orders);
+        ServiceOrder placeholder = new ServiceOrder(id, null, null, false);
+        int index = Collections.binarySearch(orders, placeholder);
+        if (index >= 0){
+            return orders.get(index);
+        }
+        return null;
     }
 
     void exportCompletedOrders(){
