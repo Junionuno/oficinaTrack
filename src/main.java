@@ -1,7 +1,12 @@
+import java.util.Scanner;
+
 public class main {
     public static void main(String[] args) {
-        ServiceManager service = new ServiceManager();
-        service.loadData();
+        Scanner sc = new Scanner(System.in);
+
+        MenuService menu = new MenuService();
+
+        menu.iniciar();
 
         ServiceOrder ordemEncontrada = service.searchById(3);
         if (ordemEncontrada != null){

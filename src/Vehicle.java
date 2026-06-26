@@ -1,6 +1,6 @@
 import java.util.Objects;
 
-public class Vehicle {
+public class Vehicle implements Comparable<Vehicle>{
     private String model;
     private String licensePlate;
     private String ownerName;
@@ -53,5 +53,10 @@ public class Vehicle {
 
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
+    }
+
+    @Override
+    public int compareTo(Vehicle o) {
+        return licensePlate.compareTo(o.licensePlate);
     }
 }
