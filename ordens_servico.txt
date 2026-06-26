@@ -1,0 +1,2 @@
+1, Vectra, JMU2H26, Geraldo, Troca de freio, false
+2, Onix, RMG2A13, Ailton, Troca de correia, false
