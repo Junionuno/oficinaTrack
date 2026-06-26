@@ -2,9 +2,47 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class ServiceManager {
     List<ServiceOrder> orders = new ArrayList<ServiceOrder>();
+    List<Vehicle> vehicles = new ArrayList<Vehicle>();
+    Scanner sc = new Scanner(System.in);
+
+    void registerVehicle(){
+        System.out.print("Modelo do veículo: ");
+        String model = sc.nextLine();
+        System.out.print("Placa do veículo: ");
+        String licensePlate = sc.nextLine();
+        System.out.print("Dono do veículo: ");
+        String owner = sc.nextLine();
+
+        Vehicle vehicle = new Vehicle(model, licensePlate, owner);
+        vehicles.add(vehicle);
+    }
+
+    ServiceOrder writeOrder(){
+        System.out.print("ID: ");
+        int id = sc.nextInt();
+        System.out.print("Digite a placa do veículo: ");
+        String licensePlate = sc.nextLine();
+        Vehicle foundVehicle = null;
+
+        for(Vehicle vehicle : vehicles){
+            if (vehicle.getLicensePlate().equals(licensePlate)){
+                foundVehicle = vehicle;
+            }
+        }
+
+        System.out.print("Descrição: ");
+        String description = sc.nextLine();
+        System.out.println("Serviço já feito? ");
+        String completed = sc.nextLine();
+        boolean completedB = Boolean.parseBoolean(completed);
+
+        ServiceOrder order = new ServiceOrder(id, foundVehicle, description, completedB);
+        return order;
+    }
 
     void registerOrder(ServiceOrder order){
         for (ServiceOrder currentOrder : orders){
