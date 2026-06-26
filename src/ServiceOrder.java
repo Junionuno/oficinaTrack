@@ -11,6 +11,16 @@ public class ServiceOrder implements Comparable<ServiceOrder>{
         this.completed = completed;
     }
 
+    @Override
+    public String toString() {
+        return "Ordem de serviço: " +
+                "id = " + id +
+                ", vehicle=" + vehicle +
+                ", description='" + description + '\'' +
+                ", completed=" + completed +
+                '}';
+    }
+
     public int getId() {
         return id;
     }
