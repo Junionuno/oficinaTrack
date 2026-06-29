@@ -19,28 +19,44 @@ public class ServiceManager {
 
         Vehicle vehicle = new Vehicle(model, licensePlate, owner);
         vehicles.add(vehicle);
+        System.out.println("Veículo cadastrado com sucesso!");
     }
 
     ServiceOrder writeOrder(){
         System.out.print("ID: ");
         int id = sc.nextInt();
-        System.out.print("Digite a placa do veículo: ");
-        String licensePlate = sc.nextLine();
-        Vehicle foundVehicle = null;
 
+        System.out.print("Digite a placa do veículo: ");
+        sc.nextLine();
+        String licensePlate = sc.nextLine();
+
+        Vehicle foundVehicle = null;
+        Collections.sort(vehicles);
         for(Vehicle vehicle : vehicles){
             if (vehicle.getLicensePlate().equals(licensePlate)){
                 foundVehicle = vehicle;
+                break;
             }
+        }
+        if (foundVehicle == null){
+            System.out.println("Erro: veículo com a placa " + licensePlate + " não cadastrado!");
+            return null;
         }
 
         System.out.print("Descrição: ");
         String description = sc.nextLine();
-        System.out.println("Serviço já feito? ");
-        String completed = sc.nextLine();
-        boolean completedB = Boolean.parseBoolean(completed);
+
+        System.out.print("Serviço já feito? (s/n)");
+        char completed = sc.next().charAt(0);
+        boolean completedB = false;
+        if (completed == 's') {
+            completedB = true;
+        }else if(completed == 'n'){
+            completedB = false;
+        }
 
         ServiceOrder order = new ServiceOrder(id, foundVehicle, description, completedB);
+        registerOrder(order);
         return order;
     }
 
@@ -57,30 +73,12 @@ public class ServiceManager {
 
     ServiceOrder searchById(int id){
         Collections.sort(orders);
-        ServiceOrder placeholder = new ServiceOrder(id, null, null, false);
-        int index = Collections.binarySearch(orders, placeholder);
+        ServiceOrder foundOrder = new ServiceOrder(id, null, null, false);
+        int index = Collections.binarySearch(orders, foundOrder);
         if (index >= 0){
             return orders.get(index);
         }
         return null;
-    }
-
-    void exportCompletedOrders(){
-        List<ServiceOrder> ordersCompleted = new ArrayList<>();
-        for (ServiceOrder order : orders) {
-            if (order.isCompleted()){
-                ordersCompleted.add(order);
-            }
-        }
-
-        ServiceOrder[] ordersToArray = ordersCompleted.toArray(new ServiceOrder[0]);
-        sendToOldAPI(ordersToArray);
-    }
-
-    void sendToOldAPI(ServiceOrder[] orders){
-        for (ServiceOrder order : orders){
-            System.out.println("Transmitindo ordem de: " + order.getVehicle().getModel());
-        }
     }
 
     void saveData(){
