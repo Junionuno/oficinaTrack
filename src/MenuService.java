@@ -9,19 +9,20 @@ public class MenuService {
         while(numMenu != 6){
             System.out.println("\n[1] Cadastrar novo veículo");
             System.out.println("[2] Cadastrar ordem de serviço");
-            System.out.println("[3] Pesquisar ordem de serviço por ID");
-            System.out.println("[4] Salvar arquivo");
-            System.out.println("[5] Encerrar");
+            System.out.println("[3] Visualizar todas ordens");
+            System.out.println("[4] Pesquisar ordem de serviço por ID");
+            System.out.println("[5] Salvar arquivo");
+            System.out.println("[6] Encerrar");
             numMenu = sc.nextInt();
 
             switch (numMenu){
 
                 case 1 : service.registerVehicle(); break;
                 case 2 : service.writeOrder(); break;
-                case 3 :
-                    System.out.print("Digite o ID que deseja procurar: ");
+                case 3 : service.loadData(); break;
+                case 4: System.out.print("Digite o ID que deseja procurar: ");
                     int id = sc.nextInt();
-                    ServiceOrder foundOrder = service.searchById(3);
+                    ServiceOrder foundOrder = service.searchById(id);
                     if (foundOrder != null){
                         System.out.println("Ordem encontrada: " + foundOrder);
                     }else {
@@ -29,9 +30,8 @@ public class MenuService {
                     }
                     service.searchById(id);
                     break;
-                case 4: service.saveData(); break;
-                case 5:
-                    System.out.println("Até logo..."); break;
+                case 5: service.saveData(); break;
+                case 6: System.out.println("Até logo..."); break;
                 default:
                     while (numMenu > 5 || numMenu < 5){
                         System.out.println("\n[1] Cadastrar novo veículo");
